@@ -1,0 +1,63 @@
+let regForm=document.querySelector(".formRegister");
+let allInput=regForm.querySelectorAll("INPUT");
+let reglist=document.querySelector(".reg-list");
+let allregData=[];
+ if(localStorage.getItem("allregData")!=null){
+     allregData=JSON.parse(localStorage.getItem("allregData"));
+ }
+//  console.log(allregData);
+
+
+
+let getregdata=()=>{
+    allregData.forEach((data,index)=>{
+        reglist.innerHTML+=`
+        <tr>
+                                <td>${index+1}</td>
+                                <td><img src="https://galeri8.uludagsozluk.com/403/logo_738288.png" width="30" height="30"></td>
+                                <td>${data.name}</td>
+                                <td>${data.email}</td>
+                                <td>${data.Dob}</td>
+                                <td>${data.mobile}</td>
+                                <td>
+                                    <button class="btn btn-primary p-1 px-2">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger p-1 px-2">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>`;
+       
+    });
+    console.log(data,index);
+}
+ 
+regForm.onsubmit=(e)=>{
+   
+    e.preventDefault();
+    let emaill=allregData.find(data=>data.email==allInput[1].value);
+      
+
+    if(emaill==undefined){
+        allregData.push({
+            name:allInput[0].value,
+            email:allInput[1].value,
+            mobile:allInput[2].value,
+            dob:allInput[3].value,
+            password:allInput[4].value,
+             profile:allInput[5].value,
+        });
+        localStorage.setItem("allregData",JSON.stringify(allregData));
+        swal("Insert successfully","Done","success");
+        getregdata();
+    }
+    else{
+        swal("Already Email existed","Failed ","warning");
+    }
+
+  
+
+    
+   
+}
